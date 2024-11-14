@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easy order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            color: rgb(68, 136, 173);
+            padding: 5px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .table-list {
+            list-style: none;
+            padding: 0;
+        }
+        .table-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .table-item div {
+            display: flex;
+            flex-direction: column;
+        }
+        .table-item .status {
+            color: #6c757d;
+        }
+
+        .top-menu {
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-part {
+    font-size: 18px;
+}
+
+.right-part img {
+    height: 30px; 
+}
+
+.litbox{
+
+height:50px;
+width: 50px;
+background-color:lightgray;
+margin-right: 20px;
+}
+
+
+span{color:green}
+
+
+.cm{color:red}
+
+.table-item:active {
+    background-color:rgb(89, 241, 190);
+}
+
+
+    </style>
+</head>
+
+<script src="jquery.js"></script>
+
+<body>
+
+    <div class="top-menu">
+        <div class="left-part">GREAT HOTEL</div>
+        <div class="right-part">
+            <img src="img/menu (1).png" style="filter: brightness(0) invert(1);" alt="Logo">
+        </div>
+    </div>
+
+    <div class="header">
+        <h1>Tables</h1>
+    </div>
+    <div class="container" >
+        <ul class="table-list">
+            <li class="table-item" id="one" data-action=""  isAllocated="false" waiter="" >
+
+                <div class="litbox" >
+
+                </div>
+
+                <div class="attr">
+                    <strong class="gm" >NONE</strong>
+                    <span class="row1" class="container" num="" ></span>
+                    <span class="cm" >None</span>
+                </div>
+            </li>
+            <li class="table-item" id="two" data-action="" isAllocated="false" waiter="" >
+
+                <div class="litbox" >
+
+                </div>
+                <div class="attr"  >
+                    <strong class="gm" >NONE</strong>
+                    <span class="row2" class="container" num=""></span>
+                    <span class="cm" >None</span>
+
+                </div> 
+            </li>
+            <li class="table-item" id="three" data-action=""  isAllocated="false" waiter="" >
+                <div class="litbox" >
+
+                </div>
+                <div class="attr">
+                    <strong class="gm" >NONE</strong>
+                    <span class="row3" class="container" num="" ></span>
+                    <span  class="cm" >None</span>
+
+                </div>
+                
+            </li>
+            <li class="table-item" id="four" data-action="" isAllocated="false" waiter="" >
+                <div class="litbox" >
+                </div>
+                <div class="attr">
+                    <strong class="gm" >NONE</strong>
+                    <span class="row4" class="container" num=""></span>
+                    <span class="cm">None</span>
+
+                </div>
+                
+            </li>
+            <li class="table-item" id="five" data-action="" isAllocated="false" waiter="" >
+                <div class="litbox" >
+
+                </div>
+                <div class="attr">
+                    <strong class="gm">NONE</strong>
+                    <span class="row5" class="container" num=""></span>
+                    <span class="cm">None</span>
+
+                </div>
+               
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+  
+
+       $(document).ready(function() {
+
+        var params = new URLSearchParams(window.location.search);
+        var value = params.get('value'); 
+        var mode =params.get('mode');
+        $('.row1').text(value);
+        document.getElementById('one').setAttribute('data-action',value);
+
+        $('.row2').text(value+'A');  
+        document.getElementById('two').setAttribute('data-action', value+'A');
+
+
+
+        $('.row3').text(value+'B');
+        document.getElementById('three').setAttribute('data-action', value+'B');
+
+
+
+        $('.row4').text(value+'C');
+        document.getElementById('four').setAttribute('data-action', value+'C');
+
+
+
+        $('.row5').text(value+'D');
+        document.getElementById('five').setAttribute('data-action', value+'D');
+
+          
+         $('.table-item').click(function() {
+          
+         var attributes = this.attributes;
+  
+         var actionValue = $(this).attr('data-action');  
+
+          waiter=$(this).attr('waiter')
+          index=$(this).attr('data-action');  
+
+          if(waiter){
+
+            window.location.href ='main.html?value=' + encodeURIComponent(waiter)+'&index=' + encodeURIComponent(index)+'&mode='+encodeURIComponent(mode);  
+
+          }else{  
+
+            window.location.href = 'list.html?value=' + encodeURIComponent(actionValue)+'&mode=' + encodeURIComponent(mode);    
+
+          }
+
+           });
+
+        
+    setInterval(()=>{
+
+        
+        $.ajax({
+        url: 'server.php',
+        method: 'GET',
+        data: {reg:1,val:value},
+        success: res => {     
+
+            var container = res.split('#');
+            container.pop(); 
+            try {
+                container.map(val => {
+
+                    val = JSON.parse(val);
+                    mode=val.mode;
+                    waiter=val.waiter;
+                    index=val.index;
+
+    const elements = document.querySelectorAll(`.table-item[data-action="${index}"]`);
+    elements.forEach(element => {
+
+     const gmElement = element.querySelector('.gm');
+     const cmElement = element.querySelector('.cm');
+
+     const litbox = element.querySelector('.litbox');
+     litbox.style.backgroundColor = 'rgb(41, 156, 41)';
+
+    gmElement.textContent =mode;
+    cmElement.textContent =waiter;
+
+    element.setAttribute('isAllocated',"true");
+    element.setAttribute('waiter',waiter);
+
+
+                });
+              
+                });
+            } catch (exception) {   
+                //console.log("json parse error occurred due to no more data");
+            }
+
+    }
+
+        })
+
+
+    },800)
+
+    });
+
+
+
+</script>
+

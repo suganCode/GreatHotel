@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easy order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            color: rgb(68, 136, 173);
+            padding: 5px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .table-list {
+            list-style: none;
+            padding: 0;
+        }
+        .table-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .table-item div {
+            display: flex;
+            flex-direction: column;
+        }
+        .table-item .status {
+            color: #6c757d;
+        }
+
+    .top-menu {
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-part {
+    font-size: 18px;
+}
+
+.right-part img {
+    height: 30px; 
+}
+
+.litbox{
+
+margin-right: 100px;
+text-align: center;
+}
+
+    </style>
+</head>
+
+<script src="jquery.js"></script>
+
+<body>
+
+    <div class="top-menu">
+        <div class="left-part">GREAT HOTEL</div>
+        <div class="right-part">
+            <img src="img/menu (1).png" style="filter: brightness(0) invert(1);" alt="Logo">
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="table-list">
+            <li class="table-item" style="border: none;" >
+                <div class="litbox" ></div>
+                <div>
+                    <strong style="background-color: #b5c0c7;padding:10px;" >Waiter</strong>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+
+    $(document).ready(function() {
+        var params = new URLSearchParams(window.location.search);
+        var value = params.get('value'); 
+        var mode=params.get('mode');
+
+        $('.litbox').text(value);
+
+        var waiters=["MURUGANANTHAM","MUTHUKUMARI",'SURESH','PRIYA','CAPTAIN','RAMESH',
+        'AATHI','NADARAJAN','DINESH','SELVI','NEETHA','PARCEL']
+
+
+                $.each(waiters, function(index, value) {
+                    $('.table-list').append( 
+                        
+                      '<li class="table-item"  index="' + (index+1) + '"  data-action="' + value + '" >'+
+
+                    '<div class="litbox" >'+(index+1)+'</div>'+
+
+                                  '<div>'+
+                               '<strong>'+value+'</strong>'+
+                                     '</div>'+
+
+                                      '</li>'); 
+                });
+   
+                
+    $('.table-item').click(function() {
+
+
+var actionValue = $(this).attr('data-action');
+
+var index = value;
+
+
+window.location.href = 'main.html?value=' + encodeURIComponent(actionValue)+'&index=' + encodeURIComponent(index)+'&mode='+encodeURIComponent(mode);
+
+
+});
+
+
+    });
+
+  
+</script>
+

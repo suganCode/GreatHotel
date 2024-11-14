@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easy order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            color: rgb(68, 136, 173);
+            padding: 5px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .table-list {
+            list-style: none;
+            padding: 0;
+        }
+        .table-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .table-item div {
+            display: flex;
+            flex-direction: column;
+        }
+        .table-item .status {
+            color: #6c757d;
+        }
+
+        .item{padding:17px;border-bottom:1px solid lightgray;}
+
+    .top-menu {
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-part {
+    font-size: 18px;
+}
+
+.right-part img {
+    height: 30px; 
+}
+
+.litbox{
+
+margin-right: 100px;
+text-align: center;
+}
+
+           .nav {
+            display: flex;
+            padding: 3px;
+        }
+        .nav button {
+            background-color: #1da09e;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left:30px;
+        }
+        .nav button:hover {
+            background-color: #218838;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 400px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .cont >li{
+
+            padding: 10px;
+        }
+
+        .table-item >div{
+            margin-left:20px;
+        }
+
+        .space{
+            margin-right: 30px;
+        }
+
+        .qty{
+            text-align: center;
+            color:white;
+            border-radius: 5px;
+        }
+
+
+        
+.overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none; 
+        }
+
+        .popup {
+            background-color: white;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+            width:200px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+    .popupbut{
+        background-color:rgb(230, 76, 76);color:white;padding:10px;border-radius: 4px;
+        border: none;
+
+    }
+
+
+    </style>
+</head>
+
+<script src="jquery.js"></script>
+
+<body> 
+
+
+    <div class="overlay" id="popup" >
+        <div class="popup">
+            <div class="message" class="innerbox" >
+               <h4>Enter valid details</h4> 
+                <div>
+                    <button class="popupbut" >OK</button>
+
+                 </div>
+
+            </div>
+         </div>
+
+    </div>  
+
+
+    <div class="top-menu">
+        <div class="left-part">GREAT HOTEL</div>
+        <div class="right-part">
+            <img src="img/menu (1).png" style="filter: brightness(0) invert(1);" alt="Logo">
+        </div>  
+    </div>
+
+    <div class="container">
+        <ul class="table-list">
+            <li class="table-item" style="border: none;" >
+                <div class="index" ></div>
+                <div>
+                    <strong class="name" >name</strong>
+                </div>
+            </li> 
+
+            <li class="table-item" style="border: none;" >
+                <div class="code" >code</div>
+                <div>
+                    <input title="input-tag" style="height:30px" class="inputuser" id="myInput" type="text" placeholder="Name" />
+                </div>
+
+                <button style="margin-left: 10px;" >HotKey</button> 
+
+            </li>
+
+            <li class="table-item" style="border: none;" >
+                <div  class="rate" >Rate</div>
+                <div >
+
+      <input title="input-tag" style="height:30px" class="quantity" id="myInput" type="text" placeholder="Qty" />
+       
+                   
+                </div>
+
+                <button style="margin-left: 30px;" onclick="insert()" title="btn" >Add</button>                
+
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="temp" >
+
+        <div class="nav">
+            <button onclick="back()" >BACK</button>
+            <button class="done">SERVED</button>
+            <button onclick="main()" >KOT</button>
+        </div>
+        
+    <div class="table-wrapper">
+    
+        <table  class="Datasheet" >
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Rate</th>
+                    <th>Qty</th>
+                </tr>
+            </thead>
+            <tbody class="trow" >
+                
+            </tbody>
+        </table>
+    </div>
+
+
+    </div>
+
+
+<ol class="itemList" style="list-style-type:none;" id="table2">
+
+</ol>
+
+
+</body>
+
+<script>
+
+    
+        
+        var value;
+    
+        var index;
+    
+        var mode;
+    
+        var rowCount=0;
+    
+        var allow=false;
+    
+        $(document).ready(function() {
+            var params = new URLSearchParams(window.location.search);
+             value = params.get('value'); 
+             index = params.get('index');
+             mode =params.get('mode');
+            $('.index').text(index);
+            $('.name').text(value);      
+        });
+    
+    
+        $(document).ready(function() {
+    
+                $('#myInput').on('input', function() {
+    
+                    allow=false;
+    
+               var parentElement = document.getElementById('table2');
+
+               while (parentElement.firstChild) {
+                   parentElement.removeChild(parentElement.firstChild);
+                  }
+    
+               console.log("0000000000000000000000000000000000000000000000000000 cleared");
+    
+               console.log('Current input value:', $(this).val()); 
+                
+         key=$(this).val();
+         
+         if(!key){
+    
+            $('.temp').css({'display':'block'})
+            $('#table2').css({'display':'none'})
+            var parentElement = document.getElementById('table2');
+               parentElement.innerHTML = ''; 
+    
+         }else{ 
+            
+             $.ajax({
+            url: 'server.php',
+            method: 'GET',
+            data: { keyword:key},
+            success: res => {
+    
+                console.log(res);
+    
+                var container = res.split('#');
+                container.pop(); 
+                console.log("container is "+container);
+    
+                console.log("lenght="+container.length);
+    
+                if(container.length>0){
+                    $('.temp').css({'display':'none'})
+                    $('#table2').css({'display':'block'})
+    
+                }else{
+    
+                    $('.temp').css({'display':'block'})
+                }
+    
+                try {   
+ 
+                      var parentElement = document.getElementById('table2');
+
+                        while (parentElement.firstChild) {
+                       parentElement.removeChild(parentElement.firstChild);
+                            }  
+
+                        container.map(val => {
+                        val = JSON.parse(val);
+                        console.log(val); 
+                        console.log(val.name);
+                        var ele = `<li class='item' id='storage'
+                         code="${val.code}" food="${val.name}" rate="${val.rate}" > 
+    
+                         <span class='space' >${val.code}</span>
+          
+                           <span class='foodName' >${val.name}</span> 
+    
+                           </li>`; 
+    
+                           if(key){
+                            $('.itemList').append(ele);
+                           }else{
+                            $('.temp').css({'display':'block'})
+                           }
+    
+                    });
+                } catch (exception) { 
+                    console.log("json parse error occurred due to no more data");
+                }
+            }  
+        });
+    
+         }
+    
+         });
+    
+    
+            })
+    ;
+    
+    
+        $('.itemList').on('click', '.item', function() {
+    
+            $('.quantity').val("");  
+
+            allow=true;
+    
+            var code = $(this).attr('code');
+            var name = $(this).attr('food'); 
+            var rate=$(this).attr('rate');
+    
+            $('.code').text(code);
+            $('.inputuser').val(name); 
+            console.log("name is"+name) 
+            $('.rate').text('₹'+rate);
+    
+            $('.itemList').css({'display':'none'});
+            $('.temp').css({'display':'block'});
+    
+    
+        });   
+    
+        function insert(){
+    
+            var waiter=value;
+            var code = $('.code').text()
+            var name = $('.inputuser').val()
+            var qty=$('.quantity').val()
+            var rate=$('.rate').text() 
+            var indexA=index;
+            var params=new URLSearchParams(window.location.search);
+            var mode ='CASH';
+            
+            console.log(waiter,code,name,qty,rate,indexA,mode);
+    
+    
+            if(allow && waiter && code && name && qty && qty!="Qty" && rate && indexA &&  mode){
+    
+                $.ajax({
+            url: 'server.php',
+            method: 'POST',
+            data: {indexvalue:indexA,waiterName:waiter,codevalue:code,Rowcount:rowCount,
+                food:name,qtyvalue:qty,ratevalue:rate,modevalue:mode}, 
+            success: res => {
+                console.log(res);
+                res=JSON.parse(res);
+    
+            }  
+            
+           })  
+            }else{
+                console.log("invalid approach"); 
+                showPopup();
+            }
+       
+        }
+    
+    
+        var params = new URLSearchParams(window.location.search);
+        value = params.get('value'); 
+    
+        waiter=value;
+    
+        var count=0;
+    
+        setInterval(()=>{
+    
+            
+        $.ajax({
+            url: 'server.php',
+            method: 'POST',
+            data: {table:1,index},
+            success: res => {
+                var container = res.split('#');
+                container.pop();  
+    
+                var sheet=$('.trow');
+    
+    
+                    try {
+    
+        container.map(val => { 
+        val = JSON.parse(val);
+    
+          ele= `<tr>
+            <td>${val.code}</td><td>${val.food}</td><td>${val.rate}</td>
+            <td>${val.qty}</td>
+            </tr>`;
+    
+        sheet.html(ele);
+    
+        rowCount=1; 
+    
+    });
+    
+    count=container.length;
+    
+    } catch (exception) { 
+    //console.log("json parse error occurred due to no more data");
+    }
+    
+                }
+    
+            
+    
+        })
+    
+    
+        },1000)
+    
+    
+        function back(){
+    
+            let seatnum = parseInt(index, 10)
+    
+                if(rowCount>0){
+    
+             window.location.href = 'table.html?value=' + encodeURIComponent(seatnum)+'&mode=' + encodeURIComponent(mode);
+    
+             }else{
+               window.history.back();
+                   }
+    
+        }
+    
+        function main(){
+    
+            window.location.href = 'waiter.html';
+    
+        }
+    
+        
+        function showPopup() {
+            document.getElementById('popup').style.display = 'flex';
+             
+        }  
+     
+        $('.popupbut').click(function() {
+        $('.overlay').css('display', 'none');
+         });
+    
+    
+         $('.done').click(()=>{
+
+            console.log(index);
+
+            $.ajax({
+            url: 'server.php',
+            method: 'POST',
+            data: {updateStatus:1,index},
+            success: res => {
+                var container = res.split('#');
+                container.pop();  
+    
+                var sheet=$('.trow');
+    
+            }
+
+            })       
+
+
+         })
+
+    
+    </script>
+
+</html>
+
+

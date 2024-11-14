@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>easy order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #34d6fa;
+            padding: 10px;
+        }
+        .nav button {
+            background-color: #1da09e;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .nav button:hover {
+            background-color: #218838;
+        }
+        .container {
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .grid div {
+            background-color:gray;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+      
+
+        .top-menu {
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-part {
+    font-size: 18px;
+}
+
+.right-part img {
+    height: 30px; 
+}
+
+
+
+h2{color:white;
+  background-color:#007bff;
+  margin:10px;
+  padding: 10px;
+}
+
+.right-part{
+    color:white;
+}
+
+
+    </style>
+</head>
+
+<script src="jquery.js"></script>
+
+<body>
+    <div class="top-menu">
+        <div class="left-part">GREAT HOTEL</div>
+        <div class="right-part">
+            <img src="img/menu (1).png" style="filter: brightness(0) invert(1);" alt="Logo">
+        </div>
+    </div>
+
+    <div class="nav">
+        <button>CASH</button>
+        <button>PARCEL</button>
+        <button>OUTDOOR CATERING</button>
+    </div>
+
+    <h2>CASH</h2>
+
+    <div class="container">
+        <div class="grid">
+            <div class="attr" val="1">1</div>
+            <div class="attr" val="2">2</div>
+            <div class="attr" val="3">3</div>
+            <div class="attr" val="4">4</div>
+            <div class="attr" val="5">5</div>
+            <div class="attr" val="6">6</div>
+            <div class="attr" val="7">7</div>
+            <div class="attr" val="8">8</div>
+            <div class="attr" val="9">9</div>
+            <div class="attr" val="10">10</div>
+            <div class="attr" val="11">11</div>
+            <div class="attr" val="12">12</div>
+        </div>
+    </div>
+
+    <h2>PARCEL</h2>
+    <h2>OUTDOOR CATERING</h2>
+
+</body>
+</html>
+
+<script>
+
+ $(document).ready(function() {
+            $('.attr').click(function() {
+                var inputValue = $(this).text(); 
+                window.location.href = 'table.html?value=' + encodeURIComponent(inputValue)+'&mode=' + encodeURIComponent("CASH");
+
+            });
+        });
+
+
+        setInterval(()=>{
+            
+        $.ajax({
+        url: 'server.php',
+        method: 'GET',
+        data: {check:1},
+        success: res => {
+
+const numberArray = res.match(/\d+/g);
+
+const numbers = numberArray.map(Number);
+
+const uniqueNumbers = [...new Set(numbers)];
+
+
+uniqueNumbers.forEach(number => {
+                const elements = document.querySelectorAll(`.attr[val="${number}"]`);
+                elements.forEach(element => {
+                                element.style.backgroundColor = 'aquamarine';
+                });
+            });
+  
+
+        }
+
+    })
+
+        },800)
+
+
+</script>
+
